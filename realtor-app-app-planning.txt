@@ -1,0 +1,14 @@
+GET     /Home           Get all homes           Everyone
+GET     /Home/:ID       Get one homes           Everyone
+POST    /Home           Create a home           Realtors
+PUT     /Home/:ID       Update a home           Realtors
+DELETE  /Home/:ID       Delete a home           Realtors
+POST    /Home/:ID       Inquire about a home    Buyers
+
+
+POST     /Auth/Buyer    Create a buyer
+POST    /Auth/Realtor   Create a realtor, need a ProductKey from Admin
+POST    /Auth/Admin     Create an admin
+POST    /Auth/Signin    
+POST    /Auth/ProductKey
+GET     /Auth/Me
