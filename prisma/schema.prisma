@@ -16,6 +16,7 @@ model User {
   phone                 String
   email                 String
   password              String
+  user_type             UserType
   created_at            DateTime @default(now())
   updated_at            DateTime @updatedAt
 }
@@ -30,7 +31,7 @@ model Home{
   price                 Float
   land_size             Float
   property_type         PropertyType
-  created_at          DateTime @default(now())
+  created_at            DateTime @default(now())
   updated_at            DateTime @updatedAt
 }
 
@@ -44,4 +45,10 @@ model Image {
 enum PropertyType {
   RESIDENTIAL
   CONDO
+}
+
+enum UserType {
+  BUYER
+  REALTOR
+  ADMIN
 }
