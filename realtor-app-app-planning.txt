@@ -1,3 +1,4 @@
+Routes we need to create:
 GET     /Home           Get all homes           Everyone
 GET     /Home/:ID       Get one homes           Everyone
 POST    /Home           Create a home           Realtors
@@ -12,3 +13,10 @@ POST    /Auth/Admin     Create an admin
 POST    /Auth/Signin    
 POST    /Auth/ProductKey
 GET     /Auth/Me
+
+
+Things we need to store:
+- Homes
+- Images
+- Users
+- Messages
