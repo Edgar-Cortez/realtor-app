@@ -20,3 +20,10 @@ Things we need to store:
 - Images
 - Users
 - Messages
+
+
+Signup Logic
+- Validate the data we get from the user
+- Validate that the email is not in use
+- Hash the password
+- Store the user in the db
