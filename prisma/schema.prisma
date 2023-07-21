@@ -22,6 +22,11 @@ model Home{
   property_type         PropertyType
 }
 
+model Image {
+  id                    Int @id @default(autoincrement())
+  url                   String
+}
+
 enum PropertyType {
   RESIDENTIAL
   CONDO
