@@ -1,0 +1,13 @@
+Sample Docker file
+version: '3.8'
+services:
+<name-of-db>:
+image: postgres:latest
+ports: - 5432:5432
+environment: - POSTGRES_DB=exampleDB - POSTGRES_USER=postgres - POSTGRES_PASSWORD=123
+networks: - exampletest
+networks:
+exampletest:
+
+docker compose up <name-of-db> -d // Creates the container in the background
+docker ps // Displays containers
