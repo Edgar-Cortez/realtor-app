@@ -9,5 +9,6 @@ networks: - exampletest
 networks:
 exampletest:
 
+Run Docker Desktop and have it load before running these commands
 docker compose up <name-of-db> -d // Creates the container in the background
 docker ps // Displays containers
