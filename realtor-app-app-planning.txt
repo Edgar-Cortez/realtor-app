@@ -27,3 +27,10 @@ Signup Logic
 - Validate that the email is not in use
 - Hash the password
 - Store the user in the db
+
+{
+    "name": "Lobo",
+    "phone": "(777) 777-7777",
+    "email": "lobo@wolfpack.com",
+    "password": "123test"
+}
