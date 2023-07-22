@@ -1,3 +1,4 @@
+##### DOCKER #####
 Sample Docker file
 version: '3.8'
 services:
@@ -12,3 +13,14 @@ exampletest:
 Run Docker Desktop and have it load before running these commands
 docker compose up <name-of-db> -d // Creates the container in the background
 docker ps // Displays containers
+
+##### NESTJS #####
+Start NestJS server
+npm run start:dev
+
+
+##### PRISMA #####
+Start Prisma Studio to view our db
+npx prisma studio
+
+update Prisma schema
