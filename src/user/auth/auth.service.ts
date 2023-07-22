@@ -19,7 +19,8 @@ export class AuthService {
   // }
 
   async signup({ name, phone, email, password }: SignupParams) {
-    // const userExists = await this.prismaService.user.findUnique({ // the email is complaining that it needs to be paired with id or another property
+    // not accepting just email field, yelling it needs more even after I made it unique
+    //const userExists = await this.prismaService.user.findUnique({
     const userExists = await this.prismaService.user.findFirst({
       where: {
         email,
