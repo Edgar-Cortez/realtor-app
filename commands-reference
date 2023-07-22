@@ -24,3 +24,4 @@ Start Prisma Studio to view our db
 npx prisma studio
 
 update Prisma schema
+npx prisma db push
