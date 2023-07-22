@@ -1,6 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcryptjs';
+import { UserType } from '@prisma/client';
 
 interface SignupParams {
   name: string;
@@ -17,7 +18,7 @@ export class AuthService {
   //   return 'signed up';
   // }
 
-  async signup({ email, password }: SignupParams) {
+  async signup({ name, phone, email, password }: SignupParams) {
     // const userExists = await this.prismaService.user.findUnique({ // the email is complaining that it needs to be paired with id or another property
     const userExists = await this.prismaService.user.findFirst({
       where: {
@@ -32,6 +33,18 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log({ hashedPassword });
+
+    const user = await this.prismaService.user.create({
+      data: {
+        name,
+        phone,
+        email,
+        password: hashedPassword,
+        user_type: UserType.BUYER,
+      },
+    });
+
+    return user;
   }
   //4:48:58
 }
