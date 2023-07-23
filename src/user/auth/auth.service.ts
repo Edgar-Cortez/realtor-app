@@ -86,5 +86,12 @@ export class AuthService {
       },
     );
   }
+
+  generateProductKey(email: string, userType: UserType) {
+    const productString = `${email}-${userType}-${process.env.PRODUCT_KEY_SECRET}`;
+    console.log({ productString });
+
+    return bcrypt.hash(productString, 10);
+  }
   //5:04:48
 }
