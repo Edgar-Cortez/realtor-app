@@ -34,3 +34,8 @@ Signup Logic
     "email": "lobo@wolfpack.com",
     "password": "123test"
 }
+
+Singin Logic
+- Find the user by email
+- Validate the hashed password
+- return a jwt
