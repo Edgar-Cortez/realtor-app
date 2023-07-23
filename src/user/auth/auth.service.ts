@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
@@ -11,13 +11,14 @@ interface SignupParams {
   password: string;
 }
 
+interface SigninParams {
+  email: string;
+  password: string;
+}
+
 @Injectable()
 export class AuthService {
   constructor(private readonly prismaService: PrismaService) {}
-
-  // signup() {
-  //   return 'signed up';
-  // }
 
   async signup({ name, phone, email, password }: SignupParams) {
     // not accepting just email field, yelling it needs more even after I made it unique
@@ -46,18 +47,44 @@ export class AuthService {
       },
     });
 
-    const token = await jwt.sign(
+    return this.generateJWT(user.id, user.name);
+  }
+
+  async signin({ email, password }: SigninParams) {
+    const user = await this.prismaService.user.findFirst({
+      where: {
+        email,
+      },
+    });
+    console.log({ user });
+
+    if (!user) {
+      throw new HttpException('Invalid credentials', 400);
+    }
+
+    const hashedPassword = user.password;
+    const isValidPassword = await bcrypt.compare(password, hashedPassword);
+    console.log({ isValidPassword });
+
+    if (!isValidPassword) {
+      throw new HttpException('Invalid credentials', 400);
+    }
+
+    return this.generateJWT(user.id, user.name);
+  }
+
+  private generateJWT(id: number, name: string) {
+    const tokenExpiration = 86400; // 24 hours
+    return jwt.sign(
       {
-        id: user.id,
+        id,
         name,
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: 3600000,
+        expiresIn: tokenExpiration,
       },
     );
-
-    return token;
   }
-  //4:48:58
+  //5:04:48
 }
