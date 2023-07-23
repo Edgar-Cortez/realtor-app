@@ -20,7 +20,10 @@ interface SigninParams {
 export class AuthService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async signup({ name, phone, email, password }: SignupParams) {
+  async signup(
+    { name, phone, email, password }: SignupParams,
+    userType: UserType,
+  ) {
     // not accepting just email field, yelling it needs more even after I made it unique
     //const userExists = await this.prismaService.user.findUnique({
     const userExists = await this.prismaService.user.findFirst({
@@ -43,7 +46,7 @@ export class AuthService {
         phone,
         email,
         password: hashedPassword,
-        user_type: UserType.BUYER,
+        user_type: userType,
       },
     });
 
