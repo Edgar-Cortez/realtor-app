@@ -41,7 +41,13 @@ export class HomeResponseDto {
     return this.land_size;
   }
 
+  @Exclude()
   property_type: PropertyType;
+
+  @Expose({ name: 'propertyType' })
+  propertyType() {
+    return this.property_type;
+  }
 
   image: string;
 
