@@ -43,6 +43,8 @@ export class HomeResponseDto {
 
   property_type: PropertyType;
 
+  image: string;
+
   @Exclude()
   realtor_id: number;
   @Exclude()
