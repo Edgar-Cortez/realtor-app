@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { HomeResponseDto } from './dto/home.dto';
 import { PropertyType } from '@prisma/client';
-import { NotFoundError } from 'rxjs';
 
 interface GetHomesParam {
   city?: string;
@@ -22,6 +21,17 @@ const homeSelect = {
   number_of_bathrooms: true,
   number_of_bedrooms: true,
 };
+
+interface CreateHomeParams {
+  address: string;
+  number_of_bedrooms: number;
+  number_of_bathrooms: number;
+  city: string;
+  price: number;
+  land_size: number;
+  property_type: PropertyType;
+  images: { url: string }[];
+}
 
 @Injectable()
 export class HomeService {
@@ -81,6 +91,38 @@ export class HomeService {
     if (!home) {
       throw new NotFoundException();
     }
+    return new HomeResponseDto(home);
+  }
+
+  async createHome({
+    address,
+    number_of_bathrooms,
+    number_of_bedrooms,
+    city,
+    price,
+    land_size,
+    property_type,
+    images,
+  }: CreateHomeParams) {
+    const home = await this.prismaService.home.create({
+      data: {
+        address,
+        number_of_bathrooms,
+        number_of_bedrooms,
+        city,
+        price,
+        land_size,
+        property_type,
+        realtor_id: 1,
+      },
+    });
+
+    const homeImages = images.map((image) => {
+      return { ...image, home_id: home.id };
+    });
+
+    await this.prismaService.image.createMany({ data: homeImages });
+
     return new HomeResponseDto(home);
   }
 }
