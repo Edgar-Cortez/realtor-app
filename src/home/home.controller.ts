@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   Query,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { HomeService } from './home.service';
 import { CreateHomeDto, HomeResponseDto, UpdateHomeDto } from './dto/home.dto';
@@ -57,14 +58,21 @@ export class HomeController {
 
   @Post()
   createHome(@Body() body: CreateHomeDto, @User() user: UserCategory) {
+    //@User() user: UserInfo
     return this.homeService.createHome(body, user.id);
   }
 
   @Put(':id')
-  updateHome(
+  async updateHome(
     @Param('id', ParseIntPipe) id: number,
     @Body() body: UpdateHomeDto,
+    @User() user: UserCategory,
   ) {
+    const realtor = await this.homeService.getRealtorByHomeId(id);
+
+    if (realtor.id !== user.id) {
+      throw new UnauthorizedException();
+    }
     return this.homeService.updateHomeById(id, body);
   }
 
